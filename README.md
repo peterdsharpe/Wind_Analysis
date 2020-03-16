@@ -16,7 +16,7 @@ def wind_speed_conus_summer_99(altitude, latitude):
     Returns the 99th-percentile wind speed magnitude over the continental United States (CONUS) in July-Aug. Aggregate of data from 1972 to 2019.
     :param altitude: altitude [m]
     :param latitude: latitude [deg]
-    :return: 99th-percentile wind speed over the continental United States in the summertime.
+    :return: 99th-percentile wind speed over the continental United States in the summertime. [m/s]
     """
     l = (latitude - 37.5) / 11.5
     a = (altitude - 24200) / 24200
