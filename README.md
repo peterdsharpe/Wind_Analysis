@@ -40,8 +40,8 @@ def wind_speed_conus_summer_99(altitude, latitude):
     lgs = 0.9805766577269118
     lqc = 4.0356834595743214
 
-    s = c0 + cql * (l - lqc) ** 2 + cqa * (a - aqc) ** 2 + cqla * a * l + cg * cas.exp(
-        -(cas.fabs(l - lgc) ** lgh / (2 * lgs ** 2) + cas.fabs(a - agc) ** agh / (
+    s = c0 + cql * (l - lqc) ** 2 + cqa * (a - aqc) ** 2 + cqla * a * l + cg * exp(
+        -(abs(l - lgc) ** lgh / (2 * lgs ** 2) + abs(a - agc) ** agh / (
                     2 * ags ** 2) + cgc * a * l)) + c4a * (
                 a - c4c) ** 4 + c12 * l * a ** 2 + c21 * l ** 2 * a
 
