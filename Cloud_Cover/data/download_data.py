@@ -18,7 +18,7 @@ request = {
         'fraction_of_cloud_cover'
     ],
     'pressure_level': [
-        '1000',
+        '50', '125',
         # '1', '2', '3',
         # '5', '7', '10',
         # '20', '30', '50',
@@ -36,7 +36,7 @@ request = {
     'area'          : [33.5, -107.5, 32.5, -106.5],  # north, west, south, east
     'grid'          : [1.0, 1.0],  # latitude/longitude grid resolution
     'year'          : [
-        '1996'
+        '1996', '2019'
         # '1979', '1980', '1981',
         # '1982', '1983', '1984',
         # '1985', '1986', '1987',
@@ -74,7 +74,7 @@ request = {
         # '31',
     ],
     'time'          : [
-        '00:00'
+        '00:00', '12:00'
         # '00:00', '01:00', '02:00',
         # '03:00', '04:00', '05:00',
         # '06:00', '07:00', '08:00',
@@ -93,5 +93,5 @@ for variable in vars_to_download:
     c.retrieve(
         'reanalysis-era5-pressure-levels',
         request,
-        f'data/{variable}.nc'
+        f'{variable}.nc'
     )
