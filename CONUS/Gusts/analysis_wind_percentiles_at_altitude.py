@@ -17,12 +17,12 @@ style.use("default")
 fig, ax = plt.subplots(1, 1, figsize=(8, 6), dpi=200)
 colors = plt.cm.rainbow(np.linspace(0, 1, len(percentiles)))
 
-altitude_mean = data.altitudes.mean(
+altitude_mean = data["altitude"].mean(
     dim=["latitude", "longitude", "time"],
 ).data
 
 for i, percentile in enumerate(percentiles):
-    cloud_pct = data.cc_overhead.quantile(
+    windspeed_pct = data["windspeed"].quantile(
         dim=["latitude", "longitude", "time"],
         q=percentile/100
     ).data
@@ -32,25 +32,26 @@ for i, percentile in enumerate(percentiles):
         30000,
         500
     )
-    cloud_plt = interpolate.interp1d(
+    windspeed_plt = interpolate.interp1d(
         x=altitude_mean,
-        y=cloud_pct,
-        # kind="cubic"
+        y=windspeed_pct,
+        kind="cubic"
     )(altitude_plt)
     plt.plot(
-        cloud_plt,
+        windspeed_plt,
         altitude_plt,
         "-",
         label="%i%%" % percentile,
         color=colors[i],
     )
+plt.title("Summertime Wind Speed Percentiles the CONUS")
+ax.xaxis.set_major_locator(ticker.MultipleLocator(base=2))
+ax.yaxis.set_major_locator(ticker.MultipleLocator(base=2000))
 plt.xlabel(r"Wind Speed [m/s]")
 plt.ylabel(r"Altitude [m]")
-plt.title("Summertime Wind Speed Percentiles over Spaceport America")
-# ax.xaxis.set_major_locator(ticker.MultipleLocator(base=2))
-# ax.yaxis.set_major_locator(ticker.MultipleLocator(base=2000))
 plt.tight_layout()
 plt.grid(True)
-# labelLines(plt.gca().get_lines(), zorder=2.5)
-# plt.savefig("analysis_wind_speed_percentiles_at_altitude/analysis_wind_speed_percentiles.png")
+label_x = (0, 30)
+labelLines(ax.get_lines(), xvals=label_x, zorder=2.5)
+plt.savefig("analysis_wind_speed_percentiles_at_altitude/analysis_wind_speed_percentiles.png")
 plt.show()
