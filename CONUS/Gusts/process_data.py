@@ -25,22 +25,40 @@ if reanalyze:
     )
 
     # Get the effective cloud coverage above a point
-    cc_overhead = np.zeros_like(data.cc)
-    cc = data.cc.data
-    for i in range(cc.shape[2]):  # latitude
-        for j in range(cc.shape[3]):  # longitude
-            for k in range(cc.shape[0]):  # time
-                column = cc[k, :, i, j]  # extract a "column" at air at a fixed point in space & time
+    cc = data.cc
+    data = data.assign(
+        cc_overhead=lambda x: 0 * x.cc
+    )
 
-                column_cc_overhead = 0
+    sheet = data.cc_overhead.isel(level=0) # A "sheet" of air at a particular pressure level, across space and time
 
-                for l, cc_at_level in enumerate(column):  # pressure level
-                    column_cc_overhead = max(column_cc_overhead, cc_at_level)
+    for i, level in enumerate(cc.coords["level"].data[1:]):
+        sheet = xr.ufuncs.maximum(
+            sheet, # the atmosphere sheet above us
+            data.cc.isel(level=i), # the cloud cover at our current pressure level
+        )
+        data.cc_overhead.loc[dict(level=level)] = sheet
 
-                    cc_overhead[k, l, i, j] = column_cc_overhead
+    # Compute the vertical velocity in m/s, not Pa/s
+    import aerosandbox.library.atmosphere as atmo
+
+    altitudes = data.altitude.mean(
+        dim=["latitude", "longitude", "time"]
+    ).data
+    densities = xr.DataArray(
+        np.array(atmo.get_density_at_altitude(altitudes)).flatten(),
+        coords={
+            "level": data.coords["level"]
+        },
+        dims=[
+            "level"
+        ]
+    )
+    dPdh = -densities * 9.80665
+    w_m_s = data.w / dPdh
 
     data = data.assign(
-        cc_overhead=(data.cc.dims, cc_overhead)
+        w_m_s=(data.w.dims, w_m_s)
     )
 
     data.to_netcdf(f"{data_directory}/data_processed.nc")

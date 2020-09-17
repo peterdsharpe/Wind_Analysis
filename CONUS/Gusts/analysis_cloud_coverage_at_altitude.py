@@ -104,8 +104,8 @@ ax_m.annotate(
     }
 )
 plt.annotate(
-    s="30% chance of clouds\non a given CONUS day",
-    xy=(0.29, 1000),
+    s="60% chance of clouds\non a given CONUS day",
+    xy=(0.60, 1000),
     xytext=(7e-2, 3000),
     xycoords="data",
     ha="right",
