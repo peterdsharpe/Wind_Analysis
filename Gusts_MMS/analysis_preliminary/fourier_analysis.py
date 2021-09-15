@@ -1,6 +1,6 @@
 from load_single_file import data
-import numpy as np
-from scipy import fft, signal
+import aerosandbox.numpy as np
+from scipy import fft, signal, interpolate
 
 w = data["W"].values
 N = len(w)
@@ -21,7 +21,16 @@ psd = power / (2 * (freq_rads_per_sec[1] - freq_rads_per_sec[0]))
 
 from aerosandbox.tools.pretty_plots import plt, show_plot
 
-plt.loglog(freq_hz, psd)
+freq_hz_plot = np.geomspace(freq_hz[1], freq_hz[-1], 1000)
+psd_plot = np.exp(
+    interpolate.PchipInterpolator(
+        np.log(freq_hz[1:]),
+        np.log(psd[1:]),
+    )(
+        np.log(freq_hz_plot)
+    )
+)
+plt.loglog(freq_hz_plot, psd_plot)
 show_plot(
     "Power Spectral Density",
     "Frequency [$Hz$]",
