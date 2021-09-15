@@ -37,4 +37,3 @@ show_plot(
     "Power Spectral Density [$m/s^3$]"
 )
 
-print(fft_output)
