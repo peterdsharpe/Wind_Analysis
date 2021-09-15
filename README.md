@@ -1,6 +1,6 @@
 # Wind_Analysis
  
-By Peter Sharpe
+By Peter Sharpe <pds@mit.edu> and Annick Dewald <adewald@mit.edu>
 
 ## Description
 
