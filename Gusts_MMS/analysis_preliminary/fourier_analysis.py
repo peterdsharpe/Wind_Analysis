@@ -23,11 +23,15 @@ from aerosandbox.tools.pretty_plots import plt, show_plot
 
 freq_hz_plot = np.geomspace(freq_hz[1], freq_hz[-1], 1000)
 psd_plot = np.exp(
-    interpolate.PchipInterpolator(
-        np.log(freq_hz[1:]),
+    interpolate.RBFInterpolator(
+        np.log(freq_hz[1:]).reshape(-1, 1),
         np.log(psd[1:]),
+        neighbors=50,
+        smoothing=50,
+        kernel="gaussian",
+        epsilon=1
     )(
-        np.log(freq_hz_plot)
+        np.log(freq_hz_plot).reshape(-1, 1)
     )
 )
 plt.loglog(freq_hz_plot, psd_plot)
@@ -36,4 +40,3 @@ show_plot(
     "Frequency [$Hz$]",
     "Power Spectral Density [$m/s^3$]"
 )
-
