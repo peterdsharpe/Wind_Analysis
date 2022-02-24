@@ -64,7 +64,7 @@ if __name__ == '__main__':
     plt.plot(Omega, psds[1], label=r"$\Phi_v$")
     plt.plot(Omega, psds[2], label=r"$\Phi_w$")
     plt.annotate(
-        s="Data: \"Flying Qualities of Piloted Aircraft\"\nMIL-STD-1797A (1990), U.S. DoD",
+        text="Data: \"Flying Qualities of Piloted Aircraft\"\nMIL-STD-1797A (1990), U.S. DoD",
         xy=(0.02, 0.02),
         xycoords="axes fraction",
         ha="left",
