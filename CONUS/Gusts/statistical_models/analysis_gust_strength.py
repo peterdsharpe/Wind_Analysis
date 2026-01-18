@@ -54,7 +54,7 @@ CS = ax.contour(
     alpha=0.9
 )
 plt.annotate(
-    s="Data: \"Flying Qualities of Piloted Aircraft\"\n"
+    text="Data: \"Flying Qualities of Piloted Aircraft\"\n"
       "MIL-STD-1797A (1990), U.S. DoD\n"
       "*Approximate, assumes 4-hour flights\n"
       "for DoD data-collection missions",
@@ -79,5 +79,5 @@ plt.ylabel(r"Altitude [m]")
 plt.title(r"RMS Gust Strengths at Various Altitudes")
 plt.tight_layout()
 # plt.legend()
-# plt.savefig("C:/Users/User/Downloads/temp.svg")
+plt.savefig("C:/Users/peter/Downloads/gusts.png", dpi=300)
 plt.show()

@@ -2,3 +2,4 @@
 # don't include any huge weather files
 .idea/
 *.ict
+__pycache__/

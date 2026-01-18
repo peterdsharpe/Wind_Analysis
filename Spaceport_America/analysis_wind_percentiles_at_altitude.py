@@ -43,7 +43,7 @@ for i, percentile in enumerate(percentiles):
     windspeed_plt = interpolate.interp1d(
         x=altitude_mean,
         y=windspeed_pct,
-        kind="cubic"
+        kind="pchip"
     )(altitude_plt)
     plt.plot(
         windspeed_plt,
